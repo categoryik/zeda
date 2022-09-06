@@ -1,0 +1,23 @@
+name: zeda_build
+on:
+  schedule:
+    - cron: '0 0 */1 * *'
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:    
+      - main
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: mi-lib/mi-lib-starter
+          ref: main
+      - name: Install MiLib
+        run: |
+          export PATH=/home/runner/usr/bin:$PATH
+          export LD_LIBRARY_PATH=/home/runner/usr/lib:$LD_LIBRARY_PATH
+          ./scripts/mi-lib-install 
