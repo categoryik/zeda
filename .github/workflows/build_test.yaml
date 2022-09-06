@@ -16,8 +16,19 @@ jobs:
         with:
           repository: categoryik/mi-lib-starter
           ref: main
-      - name: Install MiLib
+      - name: Set Path for MiLib Installer
         run: |
           export PATH=/home/runner/usr/bin:$PATH
           export LD_LIBRARY_PATH=/home/runner/usr/lib:$LD_LIBRARY_PATH
-          CC=g++ STD=c++17 ./scripts/mi-lib-install 
+      - name: "Build MiLib (COMPILER:default, STANDARD:default)"
+        run: |
+          ./scripts/mi-lib-install
+          ./scripts/mi-lib-uninstall
+      - name: "Build MiLib (COMPILER:gcc, STANDARD:c99)"
+        run: |
+          CC=gcc STD=c99 ./scripts/mi-lib-install
+          ./scripts/mi-lib-uninstall
+      - name: "Build MiLib (COMPILER:gcc, STANDARD:c++17)"
+        run: |
+          CC=g++ STD=c++17 ./scripts/mi-lib-install
+          ./scripts/mi-lib-uninstall
